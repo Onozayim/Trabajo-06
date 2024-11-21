@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Member;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
@@ -22,7 +23,7 @@ class CourseController extends Controller
         }else {
             $course_id = Member::where('user_id', auth()->id())
                 ->where('course_id', $id)
-                ->first()->id ?? null;
+                ->first()->course_id ?? null;
             $course = Course::where('id', $course_id)
                 ->first();
         }

@@ -18,21 +18,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    if (auth()->user()->rol == 'teacher')
-            $courses = Course::where('teacher', auth()->id())->get();
 
-        else
-            $courses = User::with('courses')->where('id', auth()->id())->first()->courses;
-
-    return view('dashboard', compact('courses'));
-});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+    Route::get('/', function () {
+        if (auth()->user()->rol == 'teacher')
+            $courses = Course::where('teacher', auth()->id())->get();
+
+        else
+            $courses = User::with('courses')->where('id', auth()->id())->first()->courses;
+
+        return view('dashboard', compact('courses'));
+    });
+
     Route::get('/dashboard', function () {
 
         if (auth()->user()->rol == 'teacher')

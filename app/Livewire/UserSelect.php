@@ -23,7 +23,8 @@ class UserSelect extends Component
         $this->selected_ids = $members_ids;
         $this->selected = User::whereIn('id', $members_ids)->get()->toArray();
         $this->id = $id;
-        $this->disabled = true;
+        
+        $this->disabled = count($this->selected_ids) == 0;
     }
 
     public function render()

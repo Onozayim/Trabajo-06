@@ -27,13 +27,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::get('/', function () {
-        if (auth()->user()->rol == 'teacher')
-            $courses = Course::where('teacher', auth()->id())->get();
-
-        else
-            $courses = User::with('courses')->where('id', auth()->id())->first()->courses;
-
-        return view('dashboard', compact('courses'));
+        return redirect('/dashboard');
     });
 
     Route::get('/dashboard', function () {

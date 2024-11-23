@@ -19,7 +19,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->user()->rol == 'teacher')
+            $courses = Course::where('teacher', auth()->id())->get();
+
+        else
+            $courses = User::with('courses')->where('id', auth()->id())->first()->courses;
+
+    return view('dashboard', compact('courses'));
 });
 
 Route::middleware([
